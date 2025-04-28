@@ -1,4 +1,3 @@
-
 // API service for Pokemon TCG
 
 // Base URL for the Pokemon TCG API
@@ -48,7 +47,8 @@ export interface PokemonCard {
 // Get all Pokemon TCG sets
 export const getPokemonSets = async (): Promise<PokemonSet[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/sets`);
+    // Fetch all sets with a larger page size to ensure we get everything
+    const response = await fetch(`${API_BASE_URL}/sets?pageSize=500&orderBy=-releaseDate`);
     const data = await response.json();
     return data.data;
   } catch (error) {

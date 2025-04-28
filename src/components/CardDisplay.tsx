@@ -5,9 +5,10 @@ import { Card } from "./ui/card";
 
 interface CardDisplayProps {
   setId: string;
+  isOBSMode?: boolean;
 }
 
-const CardDisplay = ({ setId }: CardDisplayProps) => {
+const CardDisplay = ({ setId, isOBSMode }: CardDisplayProps) => {
   const [cards, setCards] = useState<PokemonCard[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +61,6 @@ const CardDisplay = ({ setId }: CardDisplayProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
       {cards.map((card) => {
-        // Calculate the highest price
         let highestPrice = 0;
         let priceCategory = '';
         
@@ -76,7 +76,11 @@ const CardDisplay = ({ setId }: CardDisplayProps) => {
         return (
           <Card
             key={card.id}
-            className="p-3 flex flex-col items-center animate-fade-in hover:shadow-lg transition-all"
+            className={`p-3 flex flex-col items-center animate-fade-in ${
+              isOBSMode 
+                ? "bg-black/40 backdrop-blur-sm border border-yellow-400/30" 
+                : "hover:shadow-lg"
+            } transition-all`}
           >
             <div className="relative w-full">
               <img
@@ -86,11 +90,25 @@ const CardDisplay = ({ setId }: CardDisplayProps) => {
               />
             </div>
             <div className="mt-2 text-center w-full">
-              <h3 className="font-bold text-sm truncate">{card.name}</h3>
-              <p className="text-xs text-gray-500">{card.rarity || "Unknown Rarity"}</p>
-              <div className="mt-1 font-bold text-pokemon-blue">
+              <h3 className={`font-bold text-sm truncate ${
+                isOBSMode ? "text-yellow-400" : ""
+              }`}>
+                {card.name}
+              </h3>
+              <p className={`text-xs ${
+                isOBSMode ? "text-yellow-400/80" : "text-gray-500"
+              }`}>
+                {card.rarity || "Unknown Rarity"}
+              </p>
+              <div className={`mt-1 font-bold ${
+                isOBSMode 
+                  ? "text-yellow-400 text-xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" 
+                  : "text-pokemon-blue"
+              }`}>
                 ${highestPrice.toFixed(2)}
-                <span className="text-xs text-gray-500 ml-1">
+                <span className={`text-xs ${
+                  isOBSMode ? "text-yellow-400/80" : "text-gray-500"
+                } ml-1`}>
                   {priceCategory ? `(${priceCategory})` : ""}
                 </span>
               </div>

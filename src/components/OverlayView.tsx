@@ -32,22 +32,30 @@ const OverlayView = ({ setId, onBackToSearch }: OverlayViewProps) => {
         </div>
       )}
 
-      <div className={`${isOBSMode ? "p-0 bg-transparent" : "p-6 bg-white rounded-lg shadow-md"}`}>
+      <div className={`${
+        isOBSMode 
+          ? "p-0 bg-transparent" 
+          : "p-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-md"
+      }`}>
         <div className="mb-6">
           <SetLogo setId={setId} />
         </div>
 
-        <h2 className={`text-xl font-bold mb-4 ${isOBSMode ? "text-white" : "text-gray-800"}`}>
+        <h2 className={`text-xl font-bold mb-4 ${
+          isOBSMode 
+            ? "text-yellow-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" 
+            : "text-gray-800"
+        }`}>
           Top 5 Cards
         </h2>
 
-        <CardDisplay setId={setId} />
+        <CardDisplay setId={setId} isOBSMode={isOBSMode} />
 
         {isOBSMode && (
           <div className="fixed top-4 right-4 z-10">
             <Button
               onClick={() => setIsOBSMode(false)}
-              className="bg-pokemon-red text-white hover:bg-pokemon-blue"
+              className="bg-pokemon-red/80 backdrop-blur-sm text-white hover:bg-pokemon-blue"
             >
               Exit OBS Mode
             </Button>

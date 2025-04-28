@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SetLogo from "./SetLogo";
 import CardDisplay from "./CardDisplay";
 import { Button } from "./ui/button";
@@ -9,8 +8,21 @@ interface OverlayViewProps {
   onBackToSearch: () => void;
 }
 
+declare global {
+  interface Window {
+    obsstudio?: unknown;
+  }
+}
+
 const OverlayView = ({ setId, onBackToSearch }: OverlayViewProps) => {
   const [isOBSMode, setIsOBSMode] = useState(false);
+
+  useEffect(() => {
+    // Automatically enable OBS mode if loaded in OBS Studio
+    if (window.obsstudio) {
+      setIsOBSMode(true);
+    }
+  }, []);
 
   return (
     <div className={`w-full ${isOBSMode ? "p-0" : "p-4"}`}>

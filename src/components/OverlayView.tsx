@@ -18,7 +18,6 @@ const OverlayView = ({ setId, onBackToSearch }: OverlayViewProps) => {
   const [isOBSMode, setIsOBSMode] = useState(false);
 
   useEffect(() => {
-    // Automatically enable OBS mode if loaded in OBS Studio
     if (window.obsstudio) {
       setIsOBSMode(true);
     }
@@ -44,27 +43,19 @@ const OverlayView = ({ setId, onBackToSearch }: OverlayViewProps) => {
         </div>
       )}
 
-      <div className={`${
+      <div className={`relative min-h-screen ${
         isOBSMode 
           ? "p-0 bg-transparent" 
           : "p-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-md"
       }`}>
-        <div className="mb-6">
+        <div className="absolute bottom-0 left-0 right-0 z-10 mb-8">
           <SetLogo setId={setId} />
         </div>
-
-        <h2 className={`text-xl font-bold mb-4 ${
-          isOBSMode 
-            ? "text-yellow-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" 
-            : "text-gray-800"
-        }`}>
-          Top 5 Cards
-        </h2>
 
         <CardDisplay setId={setId} isOBSMode={isOBSMode} />
 
         {isOBSMode && (
-          <div className="fixed top-4 right-4 z-10">
+          <div className="fixed top-4 right-4 z-50">
             <Button
               onClick={() => setIsOBSMode(false)}
               className="bg-pokemon-red/80 backdrop-blur-sm text-white hover:bg-pokemon-blue"
